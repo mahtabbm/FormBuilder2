@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import status, viewsets, mixins
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -45,8 +46,20 @@ class LoginApiView(ObtainAuthToken):
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
 
+class BusinessFeedViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading and updating profile feed items"""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.BusinessFeedItemSerializer
+    queryset = models.BusinessFeedItem.objects.all()
 
+    permission_classes = (
+        permissions.AccessOwnProfile,
+        IsAuthenticated
+    )
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('status_text', 'created_on')
 
-
-
+    def perform_create(self, serializer):
+        """Sets the user profile to the logged in user"""
+        serializer.save(business=self.request.user)
 

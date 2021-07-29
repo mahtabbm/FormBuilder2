@@ -9,6 +9,7 @@ router.register('...viewset', views....ViewSet, base_name='..viewset')
 
 router = DefaultRouter()
 router.register('account/register', views.RegisterViewSet)
+router.register('feed', views.BusinessFeedViewSet)
 
 urlpatterns = [
     path('account/login/', views.LoginApiView.as_view()),

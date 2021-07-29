@@ -32,3 +32,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return super().update(instance, validated_data)
 
+
+class BusinessFeedItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.BusinessFeedItem
+        fields = ('id', 'business', 'status_text', 'created_on')
+        extra_kwargs = {'business': {'read_only': True}}

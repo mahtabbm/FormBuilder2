@@ -1,6 +1,7 @@
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.conf import settings
 
 
 # Create your models here.
@@ -60,3 +61,21 @@ class Business(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         """string representation of the user"""
         return self.email
+
+
+class BusinessFeedItem(models.Model):
+    """Business status update"""
+    business = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                 on_delete=models.CASCADE)
+    status_text = models.CharField(max_length=255)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.status_text
+
+
+class Form(models.Model):
+    title = models.CharField(max_length=255, default='untitled form')
+    description = models.CharField(max_length=550, default='description')
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+
