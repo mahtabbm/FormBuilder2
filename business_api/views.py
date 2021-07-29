@@ -46,8 +46,9 @@ class LoginApiView(ObtainAuthToken):
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
 
+"""
 class BusinessFeedViewSet(viewsets.ModelViewSet):
-    """Handles creating, reading and updating profile feed items"""
+#   Handles creating, reading and updating profile feed items
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.BusinessFeedItemSerializer
     queryset = models.BusinessFeedItem.objects.all()
@@ -60,6 +61,27 @@ class BusinessFeedViewSet(viewsets.ModelViewSet):
     search_fields = ('status_text', 'created_on')
 
     def perform_create(self, serializer):
+#       Sets the user profile to the logged in user
+        serializer.save(business=self.request.user)
+
+"""
+
+
+class FormViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading and updating form"""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.FormSerializer
+    queryset = models.Form.objects.all()
+
+    permission_classes = (
+        permissions.AccessOwnProfile,
+        IsAuthenticated
+    )
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('title', 'description')
+
+    def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
         serializer.save(business=self.request.user)
+
 

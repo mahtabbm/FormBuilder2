@@ -63,8 +63,9 @@ class Business(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
+"""
 class BusinessFeedItem(models.Model):
-    """Business status update"""
+#    Business status update
     business = models.ForeignKey(settings.AUTH_USER_MODEL,
                                  on_delete=models.CASCADE)
     status_text = models.CharField(max_length=255)
@@ -72,6 +73,7 @@ class BusinessFeedItem(models.Model):
 
     def __str__(self):
         return self.status_text
+"""
 
 
 class Form(models.Model):
@@ -109,7 +111,7 @@ class Option(models.Model):
     number_field = models.IntegerField(default=0)
     decimal_field = models.DecimalField(max_digits=5, decimal_places=2)
     datetime_field = models.DateTimeField(auto_now_add=True)
-    file_field = models.FileField()
+#    file_field = models.FileField()
     date_field = models.DateField(auto_now_add=True)
 
     part = models.ForeignKey(Part, on_delete=models.CASCADE)

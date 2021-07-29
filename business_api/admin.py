@@ -4,4 +4,5 @@ from django.contrib import admin
 from business_api import models
 
 admin.site.register(models.Business)
-admin.site.register(models.BusinessFeedItem)
+#admin.site.register(models.BusinessFeedItem)
+admin.site.register(models.Form)
