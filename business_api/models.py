@@ -77,5 +77,49 @@ class BusinessFeedItem(models.Model):
 class Form(models.Model):
     title = models.CharField(max_length=255, default='untitled form')
     description = models.CharField(max_length=550, default='description')
+
     business = models.ForeignKey(Business, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+
+class Part(models.Model):
+    title = models.CharField(max_length=255, default='untitled part')
+    description = models.CharField(max_length=500, default='Part Specification')
+
+    is_char = models.BooleanField(default=False)
+    is_int = models.BooleanField(default=False)
+    is_datetime = models.BooleanField(default=False)
+    is_file = models.BooleanField(default=False)
+    is_decimal = models.BooleanField(default=False)
+    is_date = models.BooleanField(default=False)
+
+    form = models.ForeignKey(Form, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+
+class Option(models.Model):
+    title = models.CharField(max_length=255, default='new option')
+    is_required = models.BooleanField(default=False)
+
+    text_field = models.CharField(max_length=255, default='text')
+    number_field = models.IntegerField(default=0)
+    decimal_field = models.DecimalField(max_digits=5, decimal_places=2)
+    datetime_field = models.DateTimeField(auto_now_add=True)
+    file_field = models.FileField()
+    date_field = models.DateField(auto_now_add=True)
+
+    part = models.ForeignKey(Part, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+
+
+
+
+
 
